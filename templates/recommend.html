@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Recommender System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #000000, #1a1a1a);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .navbar {
+            background-color: #111111;
+            border-bottom: 1px solid #333;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #00ffc8 !important;
+            font-size: 1.7rem;
+        }
+
+        .nav-link {
+            color: #dddddd !important;
+            margin: 0 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            padding: 6px 12px;
+            border-radius: 8px;
+        }
+
+        .nav-link:hover {
+            color: #000000 !important;
+            background-color: #00ffc8;
+            border-color: #00ffc8;
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            margin: 50px 0 30px;
+            text-align: center;
+            color: #00ffc8;
+            font-weight: bold;
+            letter-spacing: 1px;
+            animation: fadeInDown 1s ease-in-out;
+            border-bottom: 2px solid #00ffc8;
+            display: inline-block;
+        }
+
+        .card {
+            background-color: #1f1f1f;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 255, 200, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 30px rgba(0, 255, 200, 0.25);
+        }
+
+        .card-img-top {
+    height: 220px;
+    width: 100%;
+    object-fit: contain;
+    background-color: #2a2a2a; /* Optional: adds a backdrop for non-full images */
+    padding: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+        .card-body {
+            padding: 15px 20px;
+        }
+
+        .book-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: #00ffc8;
+            margin-bottom: 5px;
+        }
+
+        .text-muted-small {
+            font-size: 0.9rem;
+            color: #bbbbbb;
+        }
+
+        .form-control {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">📚 My Book Recommender</a>
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/recommend">Recommend</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container text-center">
+    <h1 class="section-title">Recommend Books</h1>
+    <form action="/recommend_books" method="POST">
+        <input type="text" name="user_input" class="form-control form-control-lg" placeholder="Enter a book title..."><br>
+        <input type="submit" class="btn btn-lg btn-warning" value="Get Recommendations">
+    </form>
+</div>
+
+{% if data %}
+<div class="container mt-5">
+    <div class="row g-4 justify-content-center">
+        {% for i in data %}
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card h-100">
+                <img src="{{ i[2] }}" class="card-img-top" alt="Book Cover">
+                <div class="card-body">
+                    <div class="book-title">{{ i[0] }}</div>
+                    <div class="text-muted-small">{{ i[1] }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+</body>
+</html>
